@@ -5,9 +5,12 @@ import com.itesm.komorebi.services.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/persona")
 public class PersonaController {
+
     @Autowired
     PersonaService personaService;
 
@@ -18,15 +21,27 @@ public class PersonaController {
         p.setEdad(32);
         return p;
     }
+
     @PostMapping("/registrar")
     public Persona registrarPersona(@RequestBody Persona persona){ //pide un body que es una personas
         //System.out.println(persona.getNombre());
         //System.out.println(persona.getEdad());
         return persona;
     }
+
     @PostMapping("/cumplir-anios")
     public Persona cumplirAnios(@RequestBody Persona persona){
         personaService.cumplirAnios(persona);
         return persona;
+    }
+
+    @GetMapping("/todos")
+    public List<Persona> obtenerTodos(){
+        return personaService.getAll();
+    }
+
+    @GetMapping("/obtener/{id}")
+    public Persona obtenerID(){
+        return personaService.getByI(1);
     }
 }
